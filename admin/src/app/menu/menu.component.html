@@ -1,0 +1,27 @@
+<div class="row page_options">
+  <div class="col-sm-12 page_header">
+    <h3>Edit menu</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-6">
+    <div class="card__menu" *ngFor="let route of model.added">
+      <div class="card__content">
+        {{route}}
+      </div>
+      <div class="card__action negative" (click)="removeRoute(route)">
+        Remove
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-6">
+    <div class="card__menu" *ngFor="let route of model.routes">
+      <div class="card__content">
+        {{route}}
+      </div>
+      <div class="card__action positive" (click)="addRoute(route)">
+        Add
+      </div>
+    </div>
+  </div>
+</div>

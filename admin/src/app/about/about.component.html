@@ -1,0 +1,110 @@
+<div class="row page_options">
+  <div class="col-sm-12 page_header">
+    <h3>My info</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card__content">
+        <form>
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name" [(ngModel)]="model.name">
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" name="title" [(ngModel)]="model.title">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="about">About me</label>
+            <textarea class="form-control" rows="8" name="about" [(ngModel)]="model.about"></textarea>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <media-input title="Your image" [(data)]="model.image"></media-input>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <media-input title="Your logo" [(data)]="model.logo"></media-input>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__content">
+        <key-value-input title="References" [(data)]="model.references"></key-value-input>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__content">
+        <key-value-input title="Networks" [(data)]="model.networks"></key-value-input>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__content">
+        <key-value-input title="Experiences" [(data)]="model.experiences"></key-value-input>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__content">
+        <tag-input title="Interests" [(data)]="model.interests"></tag-input>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__content">
+        <form>
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="country">Country</label>
+                <input type="text" class="form-control" name="country" [(ngModel)]="model.contact.country">
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" class="form-control" name="city" [(ngModel)]="model.contact.city">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="about">Street</label>
+            <input type="text" class="form-control" name="street" [(ngModel)]="model.contact.street">
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="email">Contact Email</label>
+                <input type="text" class="form-control" name="email" [(ngModel)]="model.contact.email">
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="phone">Contact Phone</label>
+                <input type="text" class="form-control" name="phone" [(ngModel)]="model.contact.phone">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <result-button default="Save changes"
+                       waiting="Waiting..."
+                       success="&#x2714; Saved"
+                       failure="&#x2718; Error occured. Please check console."
+                       timeout="Timed out"
+                       [channel]="buttonChannel"
+                       (click)="save()"></result-button>
+      </div>
+    </div>
+  </div>
+</div>

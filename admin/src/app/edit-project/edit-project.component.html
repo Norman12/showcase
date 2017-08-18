@@ -1,0 +1,95 @@
+<div class="row page_options">
+  <div class="col-sm-12 page_header">
+    <h3><a [routerLink]=" ['/'] ">&larr; Go Back</a> Edit project</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card__content">
+        <form>
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" name="title" [(ngModel)]="model.title">
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="subtitle">Subtitle</label>
+                <input type="text" class="form-control" name="subtitle" [(ngModel)]="model.subtitle">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="about">About</label>
+            <textarea class="form-control" rows="12" name="about" [(ngModel)]="model.about"></textarea>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <media-input title="Project image" [(data)]="model.image"></media-input>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <media-input title="Project logo" [(data)]="model.logo"></media-input>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__content">
+        <media-input title="Media" [(data)]="model.media" multiple="true"></media-input>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__content">
+        <tag-input title="Tags" [(data)]="model.tags"></tag-input>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__content">
+        <tag-input title="Technologies" [(data)]="model.technologies"></tag-input>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__content">
+        <key-value-input title="References" [(data)]="model.references"></key-value-input>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__content">
+        <form>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="client_name">Client name</label>
+                <input type="text" class="form-control" name="client_name" [(ngModel)]="model.client.name">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="client_about">About client</label>
+                <textarea class="form-control" rows="8" name="client_about" [(ngModel)]="model.client.about"></textarea>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <media-input title="Client image" [(data)]="model.client.image"></media-input>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <result-button default="Save changes"
+                       waiting="Waiting..."
+                       success="&#x2714; Saved"
+                       failure="&#x2718; Error occured. Please check console."
+                       timeout="Timed out"
+                       [channel]="buttonChannel"
+                       (click)="save()"></result-button>
+      </div>
+    </div>
+  </div>
+</div>

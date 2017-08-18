@@ -1,0 +1,148 @@
+{{define "project"}}
+<!DOCTYPE html>
+<html lang="en">
+
+    {{template "head" . }}
+
+	<body>
+
+	    <main>
+
+	        {{template "header" . }}
+
+		    <a href="/" class="back">&laquo; Go back</a>
+
+	        <section class="project" itemscope itemtype="http://schema.org/Article">
+
+	        	{{if .Project.Image.Path -}}
+	            <div class="project__header" style="background-image: url(/{{ .Project.Image.Path }});">
+	            {{- else}}
+				<div class="project__header gradient">
+				{{- end}}
+	                <div class="header__tag">
+	                    {{if .Project.Tags -}}
+	                    	<h4>{{ index .Project.Tags 0 }}</h4>
+	                    {{- end}}
+	                </div>
+	                <div class="header__title">
+	                    <h1 itemprop="name">{{ .Project.Title }}</h1>
+	                </div>
+	                <div class="header__description">
+	                    <h2 itemprop="headline">{{ .Project.Subtitle }}</h2>
+	                </div>
+	            </div>
+
+	            <div class="project__content">
+	            	{{if .Project.About -}}
+		                <p class="content__text">
+		                    <span class="bold">About project.</span> {{ .Project.About }}
+		                </p>
+		                <hr class="project__hr"/>
+	                {{- end}}
+
+	                {{if .Project.Images -}}
+	                	<div class="content__row">
+						    {{- range .Project.Images }}
+						    	<div class="col-xs-12 col-sm-6">
+			                        <div class="content__media {{if not .Caption}} no_caption {{- end}}">
+			                        	{{ media . }}
+			                        	{{if .Caption}}
+				                            <div class="media_caption">
+				                                <h5>{{ .Caption }}</h5>
+				                            </div>
+			                            {{- end}}
+			                        </div>
+			                    </div>
+						    {{- end}}
+					    </div>
+					{{- else}}
+					  	<p class="empty">No images of the project.</p>
+					{{- end}}
+
+					{{if .Project.Client.About -}}
+						<hr class="project__hr"/>
+						<div class="content__client">
+							{{if .Project.Client.Image.Path -}}
+							<div class="client__image">
+								{{ media .Project.Client.Image }}
+							</div>
+							{{- end}}
+							<div class="client__text">
+								<span class="bold">About client.</span> {{ .Project.Client.About }}
+							</div>
+		                </div>
+	                {{- end}}
+
+	                {{if .Project.References -}}
+	                	<div class="content__references">
+	                		<hr class="project__hr"/>
+		                    <div class="references_title">
+		                        References:
+		                    </div>
+		                    <div class="references_list">
+		                        <ul>
+		                            {{- range $key, $value := .Project.References }}
+					                    <li><a href="{{ $value }}">{{ $key }}</a></li>
+					                {{- end}}
+		                        </ul>
+		                    </div>
+		                </div>
+	                {{- end}}
+
+	                {{if .Project.Tags -}}
+	                	<hr class="project__hr"/>
+		                <div class="content__title">Focus</div>
+		                <div class="content__tags">
+		                    {{- range .Project.Tags }}
+			                    <div class="tag">{{ . }}</div>
+			                {{- end}}
+		                </div>
+	                {{- end}}
+
+	                {{if .Project.Technologies -}}
+	               		<hr class="project__hr"/>
+		                <div class="content__title">Technologies</div>
+		                <div class="content__tags">
+		                    {{- range .Project.Technologies }}
+			                    <div class="tag">{{ . }}</div>
+			                {{- end}}
+		                </div>
+	                {{- end}}
+
+	                <hr class="project__hr"/>
+
+	                <time class="content__time" datetime="{{ timehour .Project.Published }}">Published on {{ timedate .Project.Published }}</time>
+
+                    <div class="project__meta">
+                    	<link itemprop="mainEntityOfPage" href="{{ full ( project .Project.Slug ) }} " />
+                    	{{if .Project.Image.Path -}}
+                    		<div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+								<meta itemprop="url" content="{{ full ( .Project.Image.Path ) }}">
+							</div>
+                    	{{- end}}
+                    	<meta itemprop="description" content="{{ .Project.About }}">
+                    	<meta itemprop="author" content="{{ .User.Name }}">
+                    	<meta itemprop="datePublished" content="{{ timedate .Project.Published }}">
+                    	<div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+						    <meta itemprop="name" content="{{ .User.Name }}">
+						    <meta itemprop="address" content="{{ .User.Contact.City }}">
+						    <meta itemprop="telephone" content="{{ .User.Contact.Phone }}">
+						</div>
+                    </div>
+	            </div>
+	        </section>
+
+		    {{template "footer" . }}
+
+	    </main>
+
+		{{if .Js -}}
+		    {{ range .Js }}
+		    	<script src="{{ resource . }}"></script>
+		    {{- end}}
+		{{- end}}
+
+	</body>
+
+<html>
+{{end}}

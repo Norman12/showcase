@@ -1,0 +1,37 @@
+<div class="row page_options">
+  <div class="col-sm-12 page_header">
+    <h3>My pages</h3>
+    <button type="button" class="btn btn-default btn-lg" (click)="openAddContent()">
+      Add new
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div *ngIf="contents.length === 0" class="empty col-sm-12">
+    None added
+  </div>
+  <div *ngFor="let item of contents" class="col-sm-12">
+    <div class="card">
+      <div class="card__content">
+        <h4 class="content_header">{{item.title}}</h4>
+        <p class="content_text">{{item.subtitle}}</p>
+      </div>
+      <div class="card__actions">
+        <a class="negative" (click)="openDelete(item)">Delete</a>
+        <a class="positive" (click)="openEdit(item)">Edit</a>
+      </div>
+    </div>
+  </div>
+</div>
+<modal-dialog #modalDelete>
+  <div class="app-modal-header">
+    Warning
+  </div>
+  <div class="app-modal-body">
+    Do you really want to delete '{{selected.title}}'
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-default" (click)="modalDelete.hide()">Close</button>
+    <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+  </div>
+</modal-dialog>

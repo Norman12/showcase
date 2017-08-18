@@ -1,0 +1,28 @@
+@import '../styles/variables.scss';
+.navbar-default {
+  .navbar-nav {
+    li {
+      a {
+        color: #337ab7 !important;
+        &:link {
+          color: #337ab7 !important;
+        }
+        &:visited {
+          color: #337ab7 !important;
+        }
+        &:hover {
+          color: $gray !important;
+          background: lighten($gray, 60%) !important;
+        }
+        &:active {
+          color: $gray !important;
+          background: lighten($gray, 58%) !important;
+        }
+        &.active {
+          color: black !important;
+          background: lighten($gray, 56%) !important;
+        }
+      }
+    }
+  }
+}

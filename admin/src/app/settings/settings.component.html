@@ -1,0 +1,107 @@
+<div class="row page_options">
+  <div class="col-sm-12 page_header">
+    <h3>My settings</h3>
+  </div>
+</div>
+<div class="row page_nav">
+  <div class="col-sm-12">
+    <ul class="nav nav-pills nav-justified">
+      <li role="presentation" [class.active]="isActive(0)"><a (click)="setActive(0)">Meta</a></li>
+      <li role="presentation" [class.active]="isActive(1)"><a (click)="setActive(1)">Credentials</a></li>
+      <li role="presentation" [class.active]="isActive(2)"><a (click)="setActive(2)">Theme</a></li>
+    </ul>
+  </div>
+</div>
+<div class="row" *ngIf="isActive(0)">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card__content">
+        <form>
+          <div class="form-group">
+            <label for="site">Site</label>
+            <input type="text" class="form-control" name="site" [(ngModel)]="models.meta.site">
+          </div>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" name="title" [(ngModel)]="models.meta.title">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="isActive(0)">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card__content">
+        <key-value-input title="Tags" [(data)]="models.meta.tags"></key-value-input>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="isActive(0)">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card__content">
+        <key-value-input title="OG Tags" [(data)]="models.meta.og_tags"></key-value-input>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="isActive(0)">
+  <div class="col-sm-12">
+    <result-button default="Save changes" waiting="Waiting..." success="&#x2714; Saved" failure="&#x2718; Error occured. Please check console." [channel]="buttonChannelMeta" (click)="saveMeta()"></result-button>
+  </div>
+</div>
+<div class="row" *ngIf="isActive(1)">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card__content">
+        <form>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" name="email" [(ngModel)]="models.credentials.email">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="models.credentials.password">
+          </div>
+          <div class="form-group">
+            <label for="password_repeat">Password (repeat)</label>
+            <input type="password" class="form-control" name="password_repeat" [(ngModel)]="models.credentials.password_repeat">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="isActive(1)">
+  <div class="col-sm-12">
+    <result-button default="Save changes" waiting="Waiting..." success="&#x2714; Saved" failure="&#x2718; Error occured. Please check console." [channel]="buttonChannelCredentials" (click)="saveCredentials()"></result-button>
+  </div>
+</div>
+<div class="row" *ngIf="isActive(2)">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card__content">
+        <theme-input [(data)]="models.theme.themes" [(selected)]="models.theme.selected"></theme-input>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="isActive(2)">
+  <div class="col-sm-12">
+    <result-button default="Save changes" waiting="Waiting..." success="&#x2714; Saved" failure="&#x2718; Error occured. Please check console." timeout="Timed out" [channel]="buttonChannelTheme" (click)="saveTheme()"></result-button>
+  </div>
+</div>
+<modal-dialog #modalPasswordMatch>
+  <div class="app-modal-header">
+    Error
+  </div>
+  <div class="app-modal-body">
+    Passwords you entered do not match.
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-primary" (click)="modalPasswordMatch.hide()">Try again</button>
+  </div>
+</modal-dialog>

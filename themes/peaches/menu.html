@@ -1,0 +1,15 @@
+{{define "menu"}}
+<nav id="nav-main">
+    <ul>
+        {{if .Order -}} {{- range .Order }}
+        <li {{if call $.active (index $.Menu .).Slug}} class="selected" {{- end}}>
+            <a href='{{ route (index $.Menu .).Slug }}'>{{ (index $.Menu .).Title }}</a>
+        </li>
+        {{- end}} {{- end}}
+    </ul>
+</nav>
+<div id="nav-trigger">
+	<button>Menu</button>
+</div>
+<nav id="nav-mobile"></nav>
+{{end}}

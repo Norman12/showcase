@@ -1,0 +1,44 @@
+h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.key {
+  width: 100%;
+}
+
+.tag {
+  margin-bottom: 16px;
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+
+  .actions {
+    margin-left: auto;
+  }
+
+  input {
+    flex-grow: 1;
+    margin-right: 30px;
+    width: auto;
+  }
+}
+
+.empty {
+  color: grey;
+}
+
+@media (max-width: 768px) {
+  .key-row {
+    margin-bottom: 8px;
+  }
+  .flex-row {
+    input {
+      margin-right: 8px;
+    }
+  }
+}

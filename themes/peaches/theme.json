@@ -1,0 +1,14 @@
+{
+    "name": "Peaches",
+    "description": "A really simple theme. Peace ☮",
+    "author": "Marcin Praski",
+    "image": "screenshot.jpg",
+
+    "css": [
+        "assets/css/style.css"
+    ],
+
+    "js": [
+        "assets/js/script.js"
+    ]
+}

@@ -1,0 +1,77 @@
+{{define "home"}}
+<!DOCTYPE html>
+<html lang="en">
+
+    {{template "head" . }}
+
+	<body>
+
+	    <main>
+
+	        {{template "header" . }}
+
+	        <section class="row">
+		        {{if .Projects -}}
+				    {{- range .Projects }}
+				        <div class="col-xs-12 col-sm-6 col-md-4">
+			                <a href="{{ project .Slug }}">
+			                	{{if .Image.Path -}}
+			                    <article class="card" style="background-image: url(/{{ .Image.Path }});" itemscope itemtype="http://schema.org/Article">
+			                    {{- else}}
+								<article class="card gradient" itemscope itemtype="http://schema.org/Article">
+								{{- end}}
+			                        <div class="card__tag">
+			                        	{{if .Tags -}}
+			                            	<h4>{{ index .Tags 0 }}</h4>
+			                            {{- end}}
+			                        </div>
+
+			                        <div class="card__title">
+			                            <h3 itemprop="name">{{ .Title }}</h3>
+			                        </div>
+
+			                        <div class="card__description">
+			                            <p itemprop="headline">{{ .Subtitle }}</p>
+			                        </div>
+
+			                        <div class="card__meta">
+			                        	<link itemprop="mainEntityOfPage" href="{{ full ( project .Slug ) }} " />
+			                        	{{if .Image.Path -}}
+			                        		<div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+												<meta itemprop="url" content="{{ full ( .Image.Path ) }}">
+											</div>
+			                        	{{- end}}
+			                        	<meta itemprop="description" content="{{ .About }}">
+			                        	<meta itemprop="author" content="{{ $.User.Name }}">
+			                        	<meta itemprop="datePublished" content="{{ timedate .Published }}">
+			                        	<div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+										    <meta itemprop="name" content="{{ $.User.Name }}">
+										    <meta itemprop="address" content="{{ $.User.Contact.City }}">
+										    <meta itemprop="telephone" content="{{ $.User.Contact.Phone }}">
+										</div>
+			                        </div>
+			                    </article>
+			                </a>
+			            </div>
+				    {{- end}}
+				{{- else}}
+					<div class="col-xs-12">
+				  		<p class="empty">No projects as of now</p>
+				  	</div>
+				{{- end}}
+	        </section>
+
+	        {{template "footer" . }}
+
+	    </main>
+
+		{{if .Js -}}
+		    {{ range .Js }}
+		    	<script src="{{ resource . }}"></script>
+		    {{- end}}
+		{{- end}}
+
+	</body>
+
+<html>
+{{end}}

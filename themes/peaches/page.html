@@ -1,0 +1,116 @@
+{{define "page"}}
+<!DOCTYPE html>
+<html lang="en">
+
+    {{template "head" . }}
+
+	<body>
+
+	    <main>
+
+	        {{template "header" . }}
+
+	        <section class="page" itemscope itemtype="http://schema.org/Article">
+	            <div class="page__content">
+	                <p class="content__header" itemprop="name">
+	                    {{ .Content.Title }}
+	                </p>
+	                <hr class="page__hr" />
+
+	                {{if .Content.Paragraphs -}}
+	                	{{- range .Content.Paragraphs }}
+					        <p class="content__text" itemprop="description">
+			                	<span class="bold">{{ .Title }}</span> {{ .Content }}
+			                </p>
+			                {{if .Media.Path -}}
+		                        <div class="content__media {{if not .Media.Caption}} no_caption {{- end}}">
+		                        	{{ media .Media }}
+		                        	{{if .Media.Caption}}
+			                            <div class="media_caption">
+			                                <h5>{{ .Media.Caption }}</h5>
+			                            </div>
+		                            {{- end}}
+		                        </div>
+			                {{- end}}
+					    {{- end}}
+	                {{- end}}
+
+	                {{if .Content.References -}}
+	                	<div class="content__references">
+	                		<hr class="page__hr"/>
+		                    <div class="references_title">
+		                        References:
+		                    </div>
+		                    <div class="references_list">
+		                        <ul>
+		                            {{- range $key, $value := .Content.References }}
+					                    <li><a href="{{ $value }}">{{ $key }}</a></li>
+					                {{- end}}
+		                        </ul>
+		                    </div>
+		                </div>
+	                {{- end}}
+
+	                {{if .Content.Tags -}}
+	                	<hr class="page__hr"/>
+		                <div class="content__title">Focus</div>
+		                <div class="content__tags">
+		                    {{- range .Content.Tags }}
+			                    <div class="tag">{{ . }}</div>
+			                {{- end}}
+		                </div>
+	                {{- end}}
+
+	                {{if .Content.Technologies -}}
+	               		<hr class="page__hr"/>
+		                <div class="content__title">Technologies</div>
+		                <div class="content__tags">
+		                    {{- range .Content.Technologies }}
+			                    <div class="tag">{{ . }}</div>
+			                {{- end}}
+		                </div>
+	                {{- end}}
+
+	                <hr class="page__hr"/>
+
+	                <time class="content__time" datetime="{{ timehour .Content.Published }}">Published on {{ timedate .Content.Published }}</time>
+
+	                <div class="page__meta">
+	                	<link itemprop="mainEntityOfPage" href="{{ full ( route .Content.Slug ) }} " />
+
+						{{if .Content.Paragraphs -}}
+							{{ $first := index .Content.Paragraphs 0 -}}
+		                    	{{if $first.Media.Path -}}
+		                    		<div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+										<meta itemprop="url" content="{{ full ( $first.Media.Path ) }}">
+									</div>
+		                    	{{- end}}
+		                    	<meta itemprop="headline" content="{{ $first.Title }}">
+		                    	<meta itemprop="description" content="{{ $first.Content }}">
+	                    {{- end}}
+
+                    	<meta itemprop="author" content="{{ .User.Name }}">
+                    	<meta itemprop="datePublished" content="{{ timedate .Content.Published }}">
+                    	<div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+						    <meta itemprop="name" content="{{ .User.Name }}">
+						    <meta itemprop="address" content="{{ .User.Contact.City }}">
+						    <meta itemprop="telephone" content="{{ .User.Contact.Phone }}">
+						</div>
+                    </div>
+	            </div>
+	        </section>
+
+	        {{template "footer" . }}
+
+	    </main>
+
+		{{if .Js -}}
+		    {{ range .Js }}
+		    	<script src="{{ resource . }}"></script>
+		    {{- end}}
+		{{- end}}
+
+	</body>
+
+<html>
+{{end}}

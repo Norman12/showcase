@@ -1,0 +1,54 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mobile.scss';
+@import '../../styles/helpers.scss';
+
+:host{
+	padding: 0;
+	margin: 0;
+}
+
+.card__menu {
+  @extend .z-depth-1;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  border: 1px solid $gray-lighter;
+  border-radius: 4px;
+  background: white;
+
+  margin-bottom: 16px;
+
+  .card__content {
+    padding: 8px;
+  }
+
+  .card__action {
+    margin-left: auto;
+
+    padding: 8px;
+
+    color: white;
+    font-weight: bold;
+
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+
+    cursor: pointer;
+
+    &.positive {
+      background: $brand-primary;
+      &:hover {
+        background: darken($brand-primary, 5%);
+      }
+    }
+
+    &.negative {
+      background: $brand-danger;
+      &:hover {
+        background: darken($brand-danger, 5%);
+      }
+    }
+  }
+}

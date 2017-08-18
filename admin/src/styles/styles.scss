@@ -1,0 +1,113 @@
+/* this file will be extracted to main dist folder and is imported in index.html */
+
+
+/* This file is for setting global styles  */
+
+@import 'variables';
+@import 'helpers';
+@import 'mobile';
+
+body {
+  padding-top: 70px;
+  background-color: $background !important;
+}
+
+main {
+  padding: 16px 0;
+}
+
+footer {
+  padding-bottom: 16px;
+}
+
+.page_options {
+  margin-bottom: 16px;
+  a {
+    margin-right: 8px;
+  }
+}
+
+.page_header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  h3 {
+    margin: 10px 0;
+    padding: 0;
+    font-size: 16px;
+    font-weight: bold;
+    @include breakpoint(mobile) {
+      font-size: 24px;
+      font-weight: normal;
+    }
+  }
+
+  button {
+    margin-left: auto;
+  }
+}
+
+.card {
+  @extend .z-depth-1;
+
+  border: 1px solid $gray-lighter;
+  border-radius: 4px;
+  background: white;
+
+  margin-bottom: 16px;
+  @include breakpoint(mobile) {
+    margin-bottom: 32px;
+  }
+
+  .card__image {
+    height: 172px;
+    width: 100%;
+    background-color: $gray-lighter;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+  .card__content {
+    padding: 16px;
+    .content_header {}
+
+    .content_text {}
+  }
+
+  .card__actions {
+    border-top: 1px solid $gray-lighter;
+    padding: 8px;
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: flex-end;
+    font-weight: bold;
+
+    .positive {
+      display: inline-block;
+      padding: 8px 12px;
+
+      border-radius: 4px;
+      background: lighten($brand-primary, 45%);
+    }
+
+    .negative {
+      color: $brand-danger;
+      display: inline-block;
+      padding: 8px 12px;
+
+      border-radius: 4px;
+      margin-right: 8px;
+      background: lighten($brand-danger, 30%);
+    }
+  }
+}
+
+.empty {
+  color: grey;
+}

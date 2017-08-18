@@ -1,0 +1,170 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="Showcase | Setup">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+    body {
+        padding-top: 70px;
+        background-color: #fafafa !important;
+    }
+
+    main {
+        padding: 16px 0;
+    }
+
+    footer {
+        padding-bottom: 16px;
+    }
+
+    .page_options {
+        margin-bottom: 16px;
+    }
+
+    .page_options a {
+        margin-right: 8px;
+    }
+
+    .page_header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .page_header h3 {
+        margin: 10px 0;
+        padding: 0;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .card {
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 0 rgba(0, 0, 0, 0.05), 0 3px 1px -2px rgba(0, 0, 0, 0.05);
+
+        border: 1px solid $gray-lighter;
+        border-radius: 4px;
+        background: white;
+
+        margin-bottom: 16px;
+    }
+
+    .card .card__image {
+        height: 172px;
+        width: 100%;
+        background-color: $gray-lighter;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+
+    .card .card__content {
+        padding: 16px;
+    }
+
+
+    @media (min-width: 768px) {
+        .card {
+            margin-bottom: 32px;
+        }
+
+        .page_header h3 {
+            font-size: 24px;
+            font-weight: normal;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+    <!-- Add your site or application content here -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Showcase | Setup</a>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="container">
+            <div class="row page_options">
+                <div class="col-sm-12 page_header">
+                    <h3>Almost there!</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card__content">
+                            <div class="alert alert-info" role="alert"><strong>In order to start using Showcase</strong> please provide basic information about your new website, and also your login credentials.</div>
+                            <form action="/setup/finish" method="post" id="finish">
+                                <div class="form-group">
+                                    <label for="site">Your web address</label>
+                                    <input type="url" class="form-control" id="site" name="site" placeholder="e.g. http://portfolio.com/" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title">Your web title</label>
+                                    <input type="text" class="form-control" id="title" name="title" placeholder="e.g. My Portfolio" required>
+                                </div>
+                                <hr />
+                                <div class="form-group">
+                                    <label for="site">Your email address</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title">Your password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title">Your password (repeated)</label>
+                                    <input type="password" class="form-control" id="password_repeat" name="password_repeat" required>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-primary pull-right">Proceed</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>Powered by Showcase</p>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#finish').on('submit', function(e) {
+            e.preventDefault();
+
+            var password = $('#password').val();
+            var password_repeat = $('#password_repeat').val();
+            if (password != password_repeat) {
+                alert("Please enter matching passwords");
+                return;
+            } else {
+                this.submit();
+            }
+
+        });
+    })
+    </script>
+</body>
