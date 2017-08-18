@@ -64,17 +64,13 @@ func IsMapValid(m map[string]string) bool {
 
 // Types
 type Configurator struct {
-	c   []Configurable
-	cf  Configuration
-	oef []chan error
-	ocf []chan Configuration
+	c  []Configurable
+	cf Configuration
 }
 
 func NewConfigurator(args ...Configurable) *Configurator {
 	return &Configurator{
-		c:   args,
-		oef: make([]chan error, 0),
-		ocf: make([]chan Configuration, 0),
+		c: args,
 	}
 }
 
