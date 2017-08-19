@@ -1,4 +1,4 @@
-# showcase
+# Showcase
 
 #### About
 This is simple CMS written in Golang and Angular2 tailored for showcasing personal portfolios. The premise is to build a fast, managable and SEO-friendly self-hosted alternative to services like Behance. No indepth technical knowledge should be required from the users to be able to successfully interact with the project.
