@@ -177,9 +177,6 @@ func getFuncMap(r *Renderer) template.FuncMap {
 		"full": func(s string) string {
 			return r.configuration.Meta.Site + s
 		},
-		"full_slash": func(s string) string {
-			return r.configuration.Meta.Site + s
-		},
 		"project": func(s string) string {
 			return filepath.Join("/", "project", s)
 		},
