@@ -102,7 +102,7 @@ func main() {
 
 	go func() {
 		if !c.SetupCompleted {
-			var r, d, n = server.NewSetupRouter()
+			r, d, n := server.NewSetupRouter()
 
 			h.Handle("/", r)
 

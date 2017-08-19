@@ -172,16 +172,17 @@ func NewFileGzipMiddleware(gp *fs.GzipPool) func(http.Handler) http.Handler {
 
 func (gz gzipHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var wr http.ResponseWriter
+	{
+		if !strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
+			wr = w
+		} else {
+			w.Header().Set("Content-Encoding", "gzip")
 
-	if !strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
-		wr = w
-	} else {
-		w.Header().Set("Content-Encoding", "gzip")
+			zw := gz.gp.AcquireGzipWriter(w)
+			defer gz.gp.ReleaseGzipWriter(zw)
 
-		zw := gz.gp.AcquireGzipWriter(w)
-		defer gz.gp.ReleaseGzipWriter(zw)
-
-		wr = gzipResponseWriter{Writer: zw, ResponseWriter: w}
+			wr = gzipResponseWriter{Writer: zw, ResponseWriter: w}
+		}
 	}
 
 	gz.h.ServeHTTP(wr, r)

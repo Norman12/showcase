@@ -36,11 +36,11 @@ type DB interface {
 	GetConfiguration(ctx context.Context) (Configuration, error)
 	GetCredentials(ctx context.Context) (Credentials, error)
 
-	//Create
+	// Create
 	CreateContent(content *Content) error
 	CreateProject(project *Project) error
 
-	// Set
+	// Put
 	PutUser(user *User) error
 	PutContent(content *Content) error
 	PutProject(project *Project) error
@@ -49,7 +49,7 @@ type DB interface {
 	PutConfiguration(configutation *Configuration) error
 	PutRoute(route *Route) error
 
-	//Delete
+	// Delete
 	DeleteContent(slug string) error
 	DeleteProject(slug string) error
 

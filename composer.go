@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"path/filepath"
 	"sync"
 
 	"go.uber.org/zap"
@@ -139,15 +140,13 @@ func (c *Composer) GetContactPage() Page {
 		return Page{}
 	}
 
-	buildPageMeta(&t, r["contact"].Title)
-
 	return Page{
 		Title: r["contact"].Title,
 
 		Type: PageContact,
 
 		User: u,
-		Meta: t,
+		Meta: buildPageMeta(r["contact"].Title, t),
 		Menu: m,
 
 		Content: u,
@@ -159,14 +158,12 @@ func (c *Composer) GetNotFoundPage() Page {
 		t = c.getMeta()
 	)
 
-	buildPageMeta(&t, "Not found")
-
 	return Page{
 		Title: "Not found",
 
 		Type: PageNotFound,
 
-		Meta: t,
+		Meta: buildPageMeta("Not found", t),
 
 		Content: nil,
 	}
@@ -191,15 +188,13 @@ func (c *Composer) GetProject(slug string) Page {
 		}
 	}
 
-	buildProjectMeta(&t, &project)
-
 	return Page{
 		Title: project.Title,
 
 		Type: PageProject,
 
 		User: u,
-		Meta: t,
+		Meta: buildProjectMeta(&c.configuration, &project, t),
 		Menu: m,
 
 		Content: project,
@@ -234,29 +229,29 @@ func (c *Composer) GetPage(slug string) Page {
 		return Page{}
 	}
 
-	buildContentMeta(&t, &content)
-
 	return Page{
 		Title: e.Title,
 
 		Type: PageRegular,
 
 		User: u,
-		Meta: t,
+		Meta: buildContentMeta(&c.configuration, &content, t),
 		Menu: m,
 
 		Content: content,
 	}
 }
 
-func buildPageMeta(m *Meta, t string) {
+func buildPageMeta(t string, m Meta) Meta {
 	title := t + " | " + m.Title
 
 	m.Title = title
 	m.OGTags["title"] = title
+
+	return m
 }
 
-func buildProjectMeta(m *Meta, p *Project) {
+func buildProjectMeta(c *Configuration, p *Project, m Meta) Meta {
 	var t bytes.Buffer
 
 	if len(p.Tags) > 0 {
@@ -282,16 +277,20 @@ func buildProjectMeta(m *Meta, p *Project) {
 
 	m.Title = title
 
-	m.Tags["description"] = p.Subtitle
+	m.Tags["description"] = p.About
 	m.Tags["keywords"] = s
 
 	m.OGTags["title"] = title
 	m.OGTags["type"] = "article"
-	m.OGTags["url"] = ""
-	m.OGTags["image"] = ""
+	m.OGTags["url"] = c.Meta.Site + filepath.Join("project", p.Slug)
+	if p.Image.Path != "" {
+		m.OGTags["image"] = c.Meta.Site + p.Image.Path
+	}
+
+	return m
 }
 
-func buildContentMeta(m *Meta, c *Content) {
+func buildContentMeta(co *Configuration, c *Content, m Meta) Meta {
 	var t bytes.Buffer
 
 	if len(c.Tags) > 0 {
@@ -322,6 +321,12 @@ func buildContentMeta(m *Meta, c *Content) {
 
 	m.OGTags["title"] = title
 	m.OGTags["type"] = "article"
-	m.OGTags["url"] = ""
-	m.OGTags["image"] = ""
+	m.OGTags["url"] = co.Meta.Site + filepath.Join("page", c.Slug)
+	if len(c.Paragraphs) > 0 {
+		if c.Paragraphs[0].Media.Path != "" {
+			m.OGTags["image"] = co.Meta.Site + c.Paragraphs[0].Media.Path
+		}
+	}
+
+	return m
 }

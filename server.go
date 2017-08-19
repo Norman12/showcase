@@ -72,8 +72,6 @@ type NotFoundHandler struct {
 func (n *NotFoundHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
-	n.s.pushResources(w, n.s.co.GetConfiguration())
-
 	var p Page = n.s.c.GetNotFoundPage()
 
 	b := n.s.bp.Get()
@@ -132,10 +130,6 @@ var (
 	}
 
 	setupRoutes = map[string]RouteHandler{
-		"/": RouteHandler{
-			Method:  "GET",
-			Handler: unavailableHandler,
-		},
 		"/setup": RouteHandler{
 			Method:  "GET",
 			Handler: setupHandler,
