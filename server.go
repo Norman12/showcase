@@ -289,6 +289,13 @@ func (s *Server) NewRouter() http.Handler {
 		tfs = NewFileGzipMiddleware(s.gzp)(tfs)
 	}
 
+	var dfs http.Handler
+	{
+		dfs = http.FileServer(http.Dir("data"))
+		dfs = NewBrowserCacheMiddleware(s.ca)(dfs)
+		dfs = NewFileGzipMiddleware(s.gzp)(dfs)
+	}
+
 	var afs http.Handler
 	{
 		afs = http.FileServer(http.Dir("admin/dist/assets"))
@@ -298,8 +305,7 @@ func (s *Server) NewRouter() http.Handler {
 
 	r.PathPrefix("/media").Handler(http.StripPrefix("/media/", mfs)).Methods("GET")
 	r.PathPrefix("/themes").Handler(http.StripPrefix("/themes/", tfs)).Methods("GET")
-
-	// Serve Angular2 admin app assets
+	r.PathPrefix("/data").Handler(http.StripPrefix("/data/", dfs)).Methods("GET")
 	r.PathPrefix("/assets").Handler(http.StripPrefix("/assets/", afs)).Methods("GET")
 
 	for p, f := range routes {

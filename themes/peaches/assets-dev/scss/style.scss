@@ -4,6 +4,8 @@
 @import "mobile";
 @import "helpers";
 
+@import "fa/scss/font-awesome.scss";
+
 h1,
 h2,
 h3,
@@ -554,6 +556,11 @@ a {
         .content__text {
             @extend .text;
         }
+
+        p {
+            @extend .text;
+            display: block !important;
+        }
     }
 
     .content__title {
@@ -589,6 +596,11 @@ a {
         }
         .client__text {
             @extend .text;
+        }
+
+        p {
+            @extend .text;
+            display: block !important;
         }
     }
 
@@ -727,6 +739,11 @@ a {
 
         .content__text {
             @extend .text;
+        }
+
+        p {
+            @extend .text;
+            display: block !important;
         }
 
         .content__references {
@@ -887,4 +904,17 @@ a {
 
 .darker {
     color: $textPrimary;
+}
+
+.social {
+    padding: 8px 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .social__icon {
+        margin-right: 16px;
+    }
+
+    .social__link {}
 }

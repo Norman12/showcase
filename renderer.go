@@ -129,31 +129,31 @@ func (r *Renderer) Render(b *bytes.Buffer, p *Page, ro string) error {
 		return ErrNoTheme
 	}
 
-	o := sortMenuKeys(p.Menu)
+	var (
+		o = sortMenuKeys(p.Menu)
+		t = strings.Split(Layouts[p.Type], ".")
+		d = map[string]interface{}{
+			"Title": p.Title,
+			"Menu":  p.Menu,
+			"Order": o,
+			"Meta":  p.Meta,
+			"User":  p.User,
+			"Css":   r.configuration.CurrentTheme.Css,
+			"Js":    r.configuration.CurrentTheme.Js,
+			"active": func(s string) bool {
+				var l string
+				{
+					if s == "home" {
+						l = "/"
+					} else {
+						l = filepath.Join("/", "page", s)
+					}
 
-	d := map[string]interface{}{
-		"Title": p.Title,
-		"Menu":  p.Menu,
-		"Order": o,
-		"Meta":  p.Meta,
-		"User":  p.User,
-		"Css":   r.configuration.CurrentTheme.Css,
-		"Js":    r.configuration.CurrentTheme.Js,
-		"active": func(s string) bool {
-			var l string
-			{
-				if s == "home" {
-					l = "/"
-				} else {
-					l = filepath.Join("/", "page", s)
 				}
-
-			}
-			return ro == l
-		},
-	}
-
-	t := strings.Split(Layouts[p.Type], ".")
+				return ro == l
+			},
+		}
+	)
 
 	switch p.Type {
 	case PageHome:
@@ -170,6 +170,9 @@ func (r *Renderer) Render(b *bytes.Buffer, p *Page, ro string) error {
 
 func getFuncMap(r *Renderer) template.FuncMap {
 	return template.FuncMap{
+		"html": func(s string) template.HTML {
+			return template.HTML(s)
+		},
 		"now": time.Now,
 		"resource": func(s string) string {
 			return filepath.Join("/", ThemesPath, r.configuration.CurrentThemePath, s)
@@ -195,16 +198,63 @@ func getFuncMap(r *Renderer) template.FuncMap {
 		},
 		"media": func(m Media) template.HTML {
 			var r string
-
-			switch m.Type {
-			case MediaImage:
-				r = fmt.Sprintf(`<img src="/%s" alt="%s" />`, m.Path, m.Name)
-			case MediaVideo:
-				r = fmt.Sprintf(`<video controls>
-								   <source src="/%s" type="%s">
-								   Your browser does not support the video tag.
-								 </video>`, m.Path, m.Mime)
+			{
+				switch m.Type {
+				case MediaImage:
+					r = fmt.Sprintf(`<img src="/%s" alt="%s" />`, m.Path, m.Name)
+				case MediaVideo:
+					r = fmt.Sprintf(`<video controls>
+									   <source src="/%s" type="%s">
+									   Your browser does not support the video tag.
+									 </video>`, m.Path, m.Mime)
+				}
 			}
+
+			return template.HTML(r)
+		},
+		"social": func(k, v string) template.HTML {
+			var r string
+			{
+				switch k {
+				case "facebook":
+					r = "fa-facebook-square"
+				case "twitter":
+					r = "fa-twitter-square"
+				case "behance":
+					r = "fa-behance-square"
+				case "linkedin":
+					r = "fa-linkedin-square"
+				case "soundcloud":
+					r = "fa-soundcloud"
+				case "youtube":
+					r = "fa-youtube-square"
+				case "deviantart":
+					r = "fa-deviantart"
+				case "gplus":
+					r = "fa-google-plus-square"
+				case "medium":
+					r = "fa-medium"
+				case "quora":
+					r = "fa-quora"
+				case "stack-overflow":
+					r = "fa-stack-overflow"
+				case "tumblr":
+					r = "fa-tumblr-square"
+				case "github":
+					r = "fa-github-square"
+				default:
+					r = "fa-link"
+				}
+			}
+
+			r = fmt.Sprintf(`<div class="social">
+			                    <div class="social__icon">
+			                        <i class="fa fa-lg %s" aria-hidden="true"></i>
+			                    </div>
+			                    <div class="social__link">
+			                        <a href="%s">%s</a>
+			                    </div>
+			                </div>`, r, v, v)
 
 			return template.HTML(r)
 		},

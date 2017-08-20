@@ -243,16 +243,42 @@ func (c *Composer) GetPage(slug string) Page {
 }
 
 func buildPageMeta(t string, m Meta) Meta {
+	var n = Meta{
+		Tags:   make(map[string]string),
+		OGTags: make(map[string]string),
+	}
+	for k, v := range m.Tags {
+		n.Tags[k] = v
+	}
+	for k, v := range m.OGTags {
+		n.OGTags[k] = v
+	}
+	n.Site = m.Site
+	n.Title = m.Title
+
 	title := t + " | " + m.Title
 
-	m.Title = title
-	m.OGTags["title"] = title
+	n.Title = title
+	n.OGTags["title"] = title
 
-	return m
+	return n
 }
 
 func buildProjectMeta(c *Configuration, p *Project, m Meta) Meta {
+	var n = Meta{
+		Tags:   make(map[string]string),
+		OGTags: make(map[string]string),
+	}
 	var t bytes.Buffer
+
+	for k, v := range m.Tags {
+		n.Tags[k] = v
+	}
+	for k, v := range m.OGTags {
+		n.OGTags[k] = v
+	}
+	n.Site = m.Site
+	n.Title = m.Title
 
 	if len(p.Tags) > 0 {
 		for _, v := range p.Tags {
@@ -275,23 +301,36 @@ func buildProjectMeta(c *Configuration, p *Project, m Meta) Meta {
 
 	title := p.Title + " | " + m.Title
 
-	m.Title = title
+	n.Title = title
 
-	m.Tags["description"] = p.About
-	m.Tags["keywords"] = s
+	n.Tags["description"] = p.About
+	n.Tags["keywords"] = s
 
-	m.OGTags["title"] = title
-	m.OGTags["type"] = "article"
-	m.OGTags["url"] = c.Meta.Site + filepath.Join("project", p.Slug)
+	n.OGTags["title"] = title
+	n.OGTags["type"] = "article"
+	n.OGTags["url"] = c.Meta.Site + filepath.Join("project", p.Slug)
 	if p.Image.Path != "" {
-		m.OGTags["image"] = c.Meta.Site + p.Image.Path
+		n.OGTags["image"] = c.Meta.Site + p.Image.Path
 	}
 
-	return m
+	return n
 }
 
 func buildContentMeta(co *Configuration, c *Content, m Meta) Meta {
+	var n = Meta{
+		Tags:   make(map[string]string),
+		OGTags: make(map[string]string),
+	}
 	var t bytes.Buffer
+
+	for k, v := range m.Tags {
+		n.Tags[k] = v
+	}
+	for k, v := range m.OGTags {
+		n.OGTags[k] = v
+	}
+	n.Site = m.Site
+	n.Title = m.Title
 
 	if len(c.Tags) > 0 {
 		for _, v := range c.Tags {
@@ -314,19 +353,19 @@ func buildContentMeta(co *Configuration, c *Content, m Meta) Meta {
 
 	title := c.Title + " | " + m.Title
 
-	m.Title = title
+	n.Title = title
 
-	m.Tags["description"] = c.Subtitle
-	m.Tags["keywords"] = s
+	n.Tags["description"] = c.Subtitle
+	n.Tags["keywords"] = s
 
-	m.OGTags["title"] = title
-	m.OGTags["type"] = "article"
-	m.OGTags["url"] = co.Meta.Site + filepath.Join("page", c.Slug)
+	n.OGTags["title"] = title
+	n.OGTags["type"] = "article"
+	n.OGTags["url"] = co.Meta.Site + filepath.Join("page", c.Slug)
 	if len(c.Paragraphs) > 0 {
 		if c.Paragraphs[0].Media.Path != "" {
-			m.OGTags["image"] = co.Meta.Site + c.Paragraphs[0].Media.Path
+			n.OGTags["image"] = co.Meta.Site + c.Paragraphs[0].Media.Path
 		}
 	}
 
-	return m
+	return n
 }

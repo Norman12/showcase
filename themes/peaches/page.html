@@ -20,7 +20,7 @@
 	                {{if .Content.Paragraphs -}}
 	                	{{- range .Content.Paragraphs }}
 					        <p class="content__text" itemprop="description">
-			                	<span class="bold">{{ .Title }}</span> {{ .Content }}
+			                	<span class="bold">{{ .Title }}</span> {{ html .Content }}
 			                </p>
 			                {{if .Media.Path -}}
 		                        <div class="content__media {{if not .Media.Caption}} no_caption {{- end}}">

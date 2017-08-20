@@ -140,7 +140,7 @@ type Name string
 
 type Link string
 
-type Map map[Name]Link
+type Map map[string]string
 
 type Technology string
 

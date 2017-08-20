@@ -36,7 +36,7 @@ import { Generator } from '../../../app.service';
         <div class="col-sm-12">
           <div class="form-group">
             <label for="content">Content</label>
-            <textarea class="form-control" rows="12" name="content" [(ngModel)]="item.content"></textarea>
+            <ckeditor [(ngModel)]="item.content" name="content"></ckeditor>
           </div>
         </div>
       </div>

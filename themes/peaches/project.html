@@ -35,7 +35,7 @@
 	            <div class="project__content">
 	            	{{if .Project.About -}}
 		                <p class="content__text">
-		                    <span class="bold">About project.</span> {{ .Project.About }}
+		                    <span class="bold">About project.</span> {{ html .Project.About }}
 		                </p>
 		                <hr class="project__hr"/>
 	                {{- end}}
@@ -68,7 +68,7 @@
 							</div>
 							{{- end}}
 							<div class="client__text">
-								<span class="bold">About client.</span> {{ .Project.Client.About }}
+								<span class="bold">About client.</span> {{ html .Project.Client.About }}
 							</div>
 		                </div>
 	                {{- end}}

@@ -8,6 +8,8 @@ import { Subscription } from 'rxjs/Rx';
 
 import { ActivatedRoute } from '@angular/router';
 
+import { AppState } from '../app.service';
+
 import { ApiService } from '../shared/service/api.service';
 import { Emitter } from '../shared/service/emitter.service';
 
@@ -74,6 +76,8 @@ export class EditProjectComponent implements OnInit, OnDestroy {
     }
   };
 
+  public config: any = {};
+
   public buttonChannel: string = "button-edit-project";
 
   private mediaChannel: string = 'media-input';
@@ -82,11 +86,14 @@ export class EditProjectComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private api: ApiService
-  ) { }
+    private api: ApiService,
+    private state: AppState
+  ) {
+  }
 
   public ngOnInit() {
     this.model = this.route.snapshot.data['project'];
+    this.config = this.state.get("toolbar");
   }
 
   public ngOnDestroy() {

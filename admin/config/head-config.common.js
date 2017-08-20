@@ -14,6 +14,9 @@
  *
  */
 module.exports = {
+  script: [
+    { src: 'https://cdn.ckeditor.com/4.5.11/full/ckeditor.js' }
+  ],
   link: [
     /**
      * <link> tags for 'apple-touch-icon' (AKA Web Clips).
@@ -43,7 +46,7 @@ module.exports = {
     /**
      * <link> tags for a Web App Manifest
      */
-    { rel: 'manifest', href: '/assets/manifest.json' }
+    { rel: 'manifest', href: '/assets/manifest.json' },
   ],
   meta: [
     { name: 'msapplication-TileColor', content: '#00bcd4' },

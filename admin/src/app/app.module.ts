@@ -19,6 +19,8 @@ import {
 import { SharedServicesModule } from './shared/service/shared-services.module';
 import { SharedViewsModule } from './shared/view/shared-views.module';
 
+import { CKEditorModule } from 'ng2-ckeditor';
+
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -91,6 +93,7 @@ type StoreType = {
     HttpModule,
     SharedServicesModule,
     SharedViewsModule,
+    CKEditorModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
   /**
@@ -109,11 +112,34 @@ export class AppModule {
     public permanent: Permanent,
   ) {
     appState.set("token", permanent.get("token"));
+
     if (isDevMode()) {
       appState.set("api.root", "http://localhost:8080/admin/");
     } else {
       appState.set("api.root", "/admin/");
     }
+
+    appState.set("toolbar", {
+      toolbarGroups: [
+        { name: 'clipboard', groups: ['clipboard', 'undo'] },
+        { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
+        { name: 'links', groups: ['links'] },
+        { name: 'insert', groups: ['insert'] },
+        { name: 'forms', groups: ['forms'] },
+        { name: 'tools', groups: ['tools'] },
+        { name: 'document', groups: ['mode', 'document', 'doctools'] },
+        { name: 'others', groups: ['others'] },
+        '/',
+        { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
+        { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
+        { name: 'styles', groups: ['styles'] },
+        { name: 'colors', groups: ['colors'] },
+        { name: 'about', groups: ['about'] }
+      ],
+
+      removeButtons: 'Underline,Subscript,Superscript,About'
+    });
+
   }
 
   public hmrOnInit(store: StoreType) {

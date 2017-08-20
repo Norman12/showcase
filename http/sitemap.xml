@@ -14,19 +14,4 @@
           <lastmod>2017-08-19</lastmod>
           <changefreq>weekly</changefreq>
       </url>
-      <url>
-          <loc>http://localhost:8080/page/some-page</loc>
-          <lastmod>2017-08-19</lastmod>
-          <changefreq>weekly</changefreq>
-      </url>
-      <url>
-          <loc>http://localhost:8080/project/haskell</loc>
-          <lastmod>2017-08-17</lastmod>
-          <changefreq>weekly</changefreq>
-      </url>
-      <url>
-          <loc>http://localhost:8080/project/paula</loc>
-          <lastmod>2017-08-17</lastmod>
-          <changefreq>weekly</changefreq>
-      </url>
   </urlset>

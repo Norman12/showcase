@@ -1,57 +1,42 @@
 {{define "contact"}}
 <!DOCTYPE html>
 <html lang="en">
+{{template "head" . }}
 
-    {{template "head" . }}
-
-    <body>
-
-        <main>
-
-            {{template "header" . }}
-
-            <section class="page" itemscope itemtype="http://schema.org/Article">
-                <div class="page__content">
-                    <p class="content__header" itemprop="name">
-                        Contact me
-                    </p>
-                    <hr class="page__hr" />
-                    <p class="content__text" itemprop="headline">
-                        I can be reached via email, phone and social media:
-                    </p>
-                    <hr class="page__hr" />
-                    <div class="content__list">
-                        <ul>
-                            <li><a href="#">Link 1</a></li>
-                            <li><a href="#">Link 2</a></li>
-                            <li><a href="#">Link 3</a></li>
-                        </ul>
+<body>
+    <main>
+        {{template "header" . }}
+        <section class="page" itemscope itemtype="http://schema.org/Article">
+            <div class="page__content">
+                <p class="content__header" itemprop="name">
+                    Contact me
+                </p>
+                <hr class="page__hr" />
+                <p class="content__text" itemprop="headline">
+                    I can be reached via <a href="mailto:{{.User.Contact.Email}}">email</a>, <a href="tel:{{.User.Contact.Phone}}">phone</a> and following media:
+                </p>
+                <hr class="page__hr" />
+                {{if .User.Networks -}}
+                    {{ range $key, $value := .User.Networks }}
+                        {{ social $key $value }}
+                    {{- end}}
+                {{- end}}
+                <div class="page__meta">
+                    <link itemprop="mainEntityOfPage" href='{{ full ( route "contact" ) }} ' />
+                    <meta itemprop="author" content="{{ .User.Name }}">
+                    <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                        <meta itemprop="name" content="{{ .User.Name }}">
+                        <meta itemprop="address" content="{{ .User.Contact.City }}">
+                        <meta itemprop="telephone" content="{{ .User.Contact.Phone }}">
                     </div>
-
-                    <div class="page__meta">
-                        <link itemprop="mainEntityOfPage" href='{{ full ( route "contact" ) }} ' />
-                        <meta itemprop="author" content="{{ .User.Name }}">
-                        <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-                            <meta itemprop="name" content="{{ .User.Name }}">
-                            <meta itemprop="address" content="{{ .User.Contact.City }}">
-                            <meta itemprop="telephone" content="{{ .User.Contact.Phone }}">
-                        </div>
-                    </div>
-
                 </div>
-            </section>
-
-            {{template "footer" }}
-
-        </main>
-
-        {{if .Js -}}
-            {{ range .Js }}
-                <script src="{{ resource . }}"></script>
-            {{- end}}
-        {{- end}}
-
-    </body>
-
+            </div>
+        </section>
+        {{template "footer" }}
+    </main>
+    {{if .Js -}} {{ range .Js }}
+    <script src="{{ resource . }}"></script>
+    {{- end}} {{- end}}
+</body>
 <html>
 {{end}}

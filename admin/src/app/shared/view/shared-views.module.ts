@@ -15,6 +15,8 @@ import { ResultButtonComponent } from './result-button';
 
 import { KeysPipe } from '../pipe/keys';
 
+import { CKEditorModule } from 'ng2-ckeditor';
+
 @NgModule({
   declarations: [
     MediaInputComponent,
@@ -37,7 +39,8 @@ import { KeysPipe } from '../pipe/keys';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    CKEditorModule
   ]
 })
 export class SharedViewsModule {
