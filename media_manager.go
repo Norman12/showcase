@@ -74,8 +74,14 @@ func (mm *MediaManager) Save(file *File) (*Media, error) {
 }
 
 func (mm *MediaManager) Delete(m *Media) error {
+	err := os.Remove(m.Path)
+	if err != nil {
+		return err
+	}
+
 	m = &Media{}
-	return os.Remove(m.Path)
+
+	return nil
 }
 
 func (mm *MediaManager) PopulateEtagCache() {
