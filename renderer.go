@@ -158,7 +158,6 @@ func (r *Renderer) Render(b *bytes.Buffer, p *Page, ro string) error {
 	switch p.Type {
 	case PageHome:
 		d["Projects"] = p.Content.([]Project)
-	case PageContact:
 	case PageRegular:
 		d["Content"] = p.Content.(Content)
 	case PageProject:
