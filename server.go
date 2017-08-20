@@ -823,7 +823,6 @@ func updateUserHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 
 		if req.Image[0].Removed {
 			s.m.Delete(&u.Image)
-			u.Image = Media{}
 		} else {
 			if len(req.Image[0].File.Data) > 0 {
 				m, err := s.m.Save(&req.Image[0].File)
@@ -838,7 +837,6 @@ func updateUserHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 
 		if req.Logo[0].Removed {
 			s.m.Delete(&u.Logo)
-			u.Logo = Media{}
 		} else {
 			if len(req.Logo[0].File.Data) > 0 {
 				m, err := s.m.Save(&req.Logo[0].File)
@@ -1255,7 +1253,6 @@ func updateProjectHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 
 		if req.Image[0].Removed {
 			s.m.Delete(&p.Image)
-			p.Image = Media{}
 		} else {
 			if len(req.Image[0].File.Data) > 0 {
 				s.m.Delete(&p.Image)
@@ -1272,7 +1269,6 @@ func updateProjectHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 
 		if req.Logo[0].Removed {
 			s.m.Delete(&p.Logo)
-			p.Logo = Media{}
 		} else {
 			if len(req.Logo[0].File.Data) > 0 {
 				s.m.Delete(&p.Logo)
@@ -1289,7 +1285,6 @@ func updateProjectHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 
 		if req.Client.Image[0].Removed {
 			s.m.Delete(&p.Client.Image)
-			p.Client.Image = Media{}
 		} else {
 			if len(req.Client.Image[0].File.Data) > 0 {
 				s.m.Delete(&p.Client.Image)

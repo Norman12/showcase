@@ -74,6 +74,7 @@ func (mm *MediaManager) Save(file *File) (*Media, error) {
 }
 
 func (mm *MediaManager) Delete(m *Media) error {
+	m = &Media{}
 	return os.Remove(m.Path)
 }
 
