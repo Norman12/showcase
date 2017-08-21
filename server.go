@@ -1062,7 +1062,7 @@ func getProjectHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 
 		var style string
 		{
-			if p.Style.isDark() {
+			if p.Style == StyleDark {
 				style = "dark"
 			} else {
 				style = "light"

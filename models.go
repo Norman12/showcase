@@ -174,10 +174,6 @@ const (
 	StyleDark  ProjectStyle = iota
 )
 
-func (s ProjectStyle) isDark() bool {
-	return s == StyleDark
-}
-
 type UrlSet struct {
 	XMLName xml.Name `xml:"urlset"`
 	XMLns   string   `xml:"xmlns,attr"`
