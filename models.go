@@ -36,6 +36,7 @@ type Project struct {
 	References             Map
 	Client                 Client
 	Imported               Imported
+	Style                  ProjectStyle
 }
 
 type Content struct {
@@ -166,6 +167,17 @@ const (
 	MediaVideo MediaType = iota
 )
 
+type ProjectStyle uint8
+
+const (
+	StyleLight ProjectStyle = iota
+	StyleDark  ProjectStyle = iota
+)
+
+func (s ProjectStyle) isDark() bool {
+	return s == StyleDark
+}
+
 type UrlSet struct {
 	XMLName xml.Name `xml:"urlset"`
 	XMLns   string   `xml:"xmlns,attr"`
@@ -220,11 +232,14 @@ type CreateProjectRequest struct {
 	Tags         []Tag        `json:"tags"`
 	Technologies []Technology `json:"technologies"`
 	References   Map          `json:"references"`
-	Client       struct {
+
+	Client struct {
 		Name  string   `json:"name"`
 		About string   `json:"about"`
 		Image []Media_ `json:"image"`
 	} `json:"client"`
+
+	Style string `json:"style"`
 }
 
 type UpdateProjectRequest struct {
@@ -245,6 +260,8 @@ type UpdateProjectRequest struct {
 		About string   `json:"about"`
 		Image []Media_ `json:"image"`
 	} `json:"client"`
+
+	Style string `json:"style"`
 }
 
 type DeleteProjectRequest struct {

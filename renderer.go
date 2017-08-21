@@ -257,6 +257,9 @@ func getFuncMap(r *Renderer) template.FuncMap {
 
 			return template.HTML(r)
 		},
+		"dark": func(p ProjectStyle) bool {
+			return p == StyleDark
+		},
 	}
 }
 

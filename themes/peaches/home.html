@@ -16,7 +16,7 @@
 				        <div class="col-xs-12 col-sm-6 col-md-4">
 			                <a href="{{ project .Slug }}">
 			                	{{if .Image.Path -}}
-			                    <article class="card" style="background-image: url(/{{ .Image.Path }});" itemscope itemtype="http://schema.org/Article">
+			                    <article class="card {{if dark .Style -}}dark{{- end}}" style="background-image: url(/{{ .Logo.Path }});" itemscope itemtype="http://schema.org/Article">
 			                    {{- else}}
 								<article class="card gradient" itemscope itemtype="http://schema.org/Article">
 								{{- end}}

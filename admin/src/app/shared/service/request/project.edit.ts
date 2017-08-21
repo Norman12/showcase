@@ -10,10 +10,11 @@ export interface ProjectEditRequest {
 	media: Media[];
 	tags: string[];
 	technologies: string[];
-	references: {[index: string]: string};
+	references: { [index: string]: string };
 	client: {
 		name: string;
 		about: string;
 		image: [Media];
 	};
+	style: string;
 }

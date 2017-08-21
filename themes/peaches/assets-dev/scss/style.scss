@@ -337,14 +337,12 @@ a {
 
     &.dark {
         .card__tag {
-            text-shadow: none;
             color: $textSecondary;
         }
 
         .card__title,
         .card__header,
         .card__description {
-            text-shadow: none;
             color: $textPrimary;
         }
     }
@@ -466,15 +464,13 @@ a {
         border-top-right-radius: $cardRadius;
 
         &.dark {
-            .card__tag {
-                text-shadow: none;
+            .header__tag {
                 color: $textSecondary;
             }
 
-            .card__title,
-            .card__header,
-            .card__description {
-                text-shadow: none;
+            .header__title,
+            .header__header,
+            .header__description {
                 color: $textPrimary;
             }
         }

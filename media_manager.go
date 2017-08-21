@@ -8,6 +8,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/google/uuid"
 )
 
 const (
@@ -111,7 +113,7 @@ func providePopulatingFunc(t MediaType, h hash.Hash, c Cache) func() {
 }
 
 func tempName(prefix, suffix string) string {
-	return prefix + GenerateRandomString(16) + suffix
+	return prefix + uuid.New().String() + suffix
 }
 
 func getPath(s string) (MediaType, string, error) {

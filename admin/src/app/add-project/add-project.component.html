@@ -80,15 +80,32 @@
         </form>
       </div>
     </div>
+    <div class="card">
+      <div class="card__content">
+        <label>Graphical style</label>
+        <form>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="style" value="light" [(ngModel)]="model.style" checked> Light
+                </label>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="style" value="dark" [(ngModel)]="model.style"> Dark
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
     <div class="row">
       <div class="col-sm-12">
-        <result-button default="Add project"
-                       waiting="Waiting..."
-                       success="&#x2714; Added"
-                       failure="&#x2718; Error occured. Please check console."
-                       timeout="Timed out"
-                       [channel]="buttonChannel"
-                       (click)="save()"></result-button>
+        <result-button default="Add project" waiting="Waiting..." success="&#x2714; Added" failure="&#x2718; Error occured. Please check console." timeout="Timed out" [channel]="buttonChannel" (click)="save()"></result-button>
       </div>
     </div>
   </div>

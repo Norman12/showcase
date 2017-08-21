@@ -2,7 +2,7 @@
     "name": "Peaches",
     "description": "A really simple theme. Peace ☮",
     "author": "Marcin Praski",
-    "image": "screenshot.jpg",
+    "image": "screenshot.png",
 
     "css": [
         "assets/css/style.css"

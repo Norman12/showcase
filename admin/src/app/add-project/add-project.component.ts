@@ -72,7 +72,8 @@ export class AddProjectComponent implements OnInit, OnDestroy {
           data: null
         }
       }]
-    }
+    },
+    style: 'light'
   };
 
   public buttonChannel: string = "button-add-project";

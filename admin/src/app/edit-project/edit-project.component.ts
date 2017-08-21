@@ -73,7 +73,8 @@ export class EditProjectComponent implements OnInit, OnDestroy {
           data: null
         }
       }]
-    }
+    },
+    style: 'light'
   };
 
   public config: any = {};

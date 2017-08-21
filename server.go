@@ -1060,6 +1060,15 @@ func getProjectHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 			return
 		}
 
+		var style string
+		{
+			if p.Style.isDark() {
+				style = "dark"
+			} else {
+				style = "light"
+			}
+		}
+
 		req := UpdateProjectRequest{
 			Slug: p.Slug,
 
@@ -1098,6 +1107,7 @@ func getProjectHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 					},
 				},
 			},
+			Style: style,
 		}
 
 		var media = make([]Media_, 0, len(p.Images))
@@ -1124,6 +1134,15 @@ func createProjectHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 			return
 		}
 
+		var style ProjectStyle
+		{
+			if req.Style == "light" {
+				style = StyleLight
+			} else {
+				style = StyleDark
+			}
+		}
+
 		p := Project{
 			Slug: GenerateSlug(req.Title),
 
@@ -1143,6 +1162,7 @@ func createProjectHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 			},
 
 			Imported: Imported{},
+			Style:    style,
 		}
 
 		err := s.db.CreateProject(&p)
@@ -1238,6 +1258,15 @@ func updateProjectHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 			return
 		}
 
+		var style ProjectStyle
+		{
+			if req.Style == "light" {
+				style = StyleLight
+			} else {
+				style = StyleDark
+			}
+		}
+
 		p.Title = req.Title
 		p.Subtitle = req.Subtitle
 		p.About = req.About
@@ -1250,6 +1279,8 @@ func updateProjectHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 		p.Client.About = req.Client.About
 
 		p.Images = s.diffMedia(p.Images, req.Media)
+
+		p.Style = style
 
 		if req.Image[0].Removed {
 			s.m.Delete(&p.Image)

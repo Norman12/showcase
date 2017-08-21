@@ -15,7 +15,7 @@
 	        <section class="project" itemscope itemtype="http://schema.org/Article">
 
 	        	{{if .Project.Image.Path -}}
-	            <div class="project__header" style="background-image: url(/{{ .Project.Image.Path }});">
+	            <div class="project__header {{if dark .Project.Style -}}dark{{- end}}" style="background-image: url(/{{ .Project.Image.Path }});">
 	            {{- else}}
 				<div class="project__header gradient">
 				{{- end}}
