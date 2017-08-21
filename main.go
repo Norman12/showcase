@@ -35,7 +35,7 @@ func main() {
 
 	var (
 		ctx   = context.TODO()
-		cache = NewDiskCache(DefaultExpiration, DefaultEvictionInterval)
+		cache = NewMemoryCache(DefaultExpiration, DefaultEvictionInterval)
 		db    = NewCachedDatabase(bolt, cache, logger)
 	)
 

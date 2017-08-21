@@ -31,7 +31,7 @@ func (i Item) Expired() bool {
 	return i.Expires != NoExpiration && time.Now().UnixNano() > i.Expires
 }
 
-type diskCache struct {
+type memoryCache struct {
 	sync.RWMutex
 	items map[string]Item
 
@@ -40,8 +40,8 @@ type diskCache struct {
 	worker worker
 }
 
-func NewDiskCache(d time.Duration, e time.Duration) Cache {
-	c := &diskCache{
+func NewMemoryCache(d time.Duration, e time.Duration) Cache {
+	c := &memoryCache{
 		expiration: d,
 		items:      make(map[string]Item),
 		worker:     NewWorker(e),
@@ -52,7 +52,7 @@ func NewDiskCache(d time.Duration, e time.Duration) Cache {
 	return c
 }
 
-func (cache *diskCache) Get(k string) (interface{}, bool) {
+func (cache *memoryCache) Get(k string) (interface{}, bool) {
 	cache.RLock()
 
 	item, f := cache.items[k]
@@ -71,7 +71,7 @@ func (cache *diskCache) Get(k string) (interface{}, bool) {
 	return item.Value, true
 }
 
-func (cache *diskCache) SetWithTime(k string, v interface{}, d time.Duration) {
+func (cache *memoryCache) SetWithTime(k string, v interface{}, d time.Duration) {
 	cache.Lock()
 
 	var e int64
@@ -87,7 +87,7 @@ func (cache *diskCache) SetWithTime(k string, v interface{}, d time.Duration) {
 	cache.Unlock()
 }
 
-func (cache *diskCache) Set(k string, v interface{}) {
+func (cache *memoryCache) Set(k string, v interface{}) {
 	cache.Lock()
 
 	e := time.Now().Add(cache.expiration).UnixNano()
@@ -100,7 +100,7 @@ func (cache *diskCache) Set(k string, v interface{}) {
 	cache.Unlock()
 }
 
-func (cache *diskCache) Delete(k string) {
+func (cache *memoryCache) Delete(k string) {
 	cache.Lock()
 
 	if _, f := cache.items[k]; f {
@@ -110,7 +110,7 @@ func (cache *diskCache) Delete(k string) {
 	cache.Unlock()
 }
 
-func (cache *diskCache) Clear() {
+func (cache *memoryCache) Clear() {
 	cache.Lock()
 
 	cache.items = make(map[string]Item)
@@ -118,7 +118,7 @@ func (cache *diskCache) Clear() {
 	cache.Unlock()
 }
 
-func (cache *diskCache) DeleteExpired() {
+func (cache *memoryCache) DeleteExpired() {
 	cache.Lock()
 
 	for k, v := range cache.items {
@@ -130,7 +130,7 @@ func (cache *diskCache) DeleteExpired() {
 	cache.Unlock()
 }
 
-func (cache *diskCache) Finalize() {
+func (cache *memoryCache) Finalize() {
 	cache.worker.Stop()
 	cache.Clear()
 }
