@@ -816,6 +816,8 @@ a {
 .media {
     border-radius: $imageRadius;
 
+    @extend .z-depth-1;
+
     img,
     video {
         display: block;

@@ -21,7 +21,10 @@ const (
 )
 
 func main() {
-	httpAddr := flag.String("http.addr", ":8080", "HTTP listen address")
+	var (
+		httpAddr  = flag.String("http.addr", ":8080", "HTTP listen address")
+		debugMode = flag.Bool("debug", false, "Debug mode")
+	)
 	flag.Parse()
 
 	logger, _ := zap.NewProduction()
@@ -122,6 +125,10 @@ func main() {
 		} else {
 			h.Handle("/admin/", server.NewAdminRouter())
 			h.Handle("/", server.NewRouter())
+		}
+
+		if *debugMode {
+			h.Handle("/debug/", server.NewPprofRouter())
 		}
 	}()
 

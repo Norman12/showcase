@@ -43,7 +43,7 @@
 	                {{if .Project.Images -}}
 	                	<div class="content__row">
 						    {{- range .Project.Images }}
-						    	<div class="col-xs-12 col-sm-6">
+						    	<div class="col-xs-12 col-md-6">
 			                        <div class="content__media {{if not .Caption}} no_caption {{- end}}">
 			                        	{{ media . }}
 			                        	{{if .Caption}}

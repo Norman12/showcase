@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/http/pprof"
 	"net/url"
 	"path/filepath"
 	"sort"
@@ -371,6 +372,7 @@ func (s *Server) NewAdminRouter() http.Handler {
 
 	return r
 }
+
 func (s *Server) NewSetupRouter() (http.Handler, <-chan bool, chan<- bool) {
 	var (
 		r = mux.NewRouter()
@@ -458,7 +460,7 @@ func (s *Server) NewSetupRouter() (http.Handler, <-chan bool, chan<- bool) {
 
 			var (
 				e      error
-				ch     = make(chan bool)
+				ch     = make(chan struct{})
 				c0, c1 = s.co.Configure(co)
 			)
 			go func(err error) {
@@ -466,12 +468,12 @@ func (s *Server) NewSetupRouter() (http.Handler, <-chan bool, chan<- bool) {
 					select {
 					case <-time.After(ConfigurationTimeoutInterval):
 						err = ErrConfigurationTimedOut
-						ch <- true
+						ch <- struct{}{}
 					case <-c0:
-						ch <- true
+						ch <- struct{}{}
 					case e := <-c1:
 						err = e
-						ch <- true
+						ch <- struct{}{}
 					case <-ch:
 						return
 					}
@@ -501,6 +503,18 @@ func (s *Server) NewSetupRouter() (http.Handler, <-chan bool, chan<- bool) {
 	}
 
 	return r, d, n
+}
+
+func (s *Server) NewPprofRouter() http.Handler {
+	r := mux.NewRouter()
+
+	r.HandleFunc("/debug/pprof", pprof.Index)
+	r.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
+	r.HandleFunc("/debug/pprof/profile", pprof.Profile)
+	r.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
+	r.HandleFunc("/debug/pprof/trace", pprof.Trace)
+
+	return r
 }
 
 // Public routes
@@ -910,7 +924,7 @@ func updateThemeHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 
 		var (
 			e      error
-			ch     = make(chan bool)
+			ch     = make(chan struct{})
 			c0, c1 = s.co.Configure(c)
 		)
 		go func(err error) {
@@ -918,12 +932,12 @@ func updateThemeHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 				select {
 				case <-time.After(ConfigurationTimeoutInterval):
 					err = ErrConfigurationTimedOut
-					ch <- true
+					ch <- struct{}{}
 				case <-c0:
-					ch <- true
+					ch <- struct{}{}
 				case e := <-c1:
 					err = e
-					ch <- true
+					ch <- struct{}{}
 				case <-ch:
 					return
 				}
@@ -980,7 +994,7 @@ func updateMetaHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 
 		var (
 			e      error
-			ch     = make(chan bool)
+			ch     = make(chan struct{})
 			c0, c1 = s.co.Configure(c)
 		)
 		go func(err error) {
@@ -988,12 +1002,12 @@ func updateMetaHandler(s *Server) func(http.ResponseWriter, *http.Request) {
 				select {
 				case <-time.After(ConfigurationTimeoutInterval):
 					err = ErrConfigurationTimedOut
-					ch <- true
+					ch <- struct{}{}
 				case <-c0:
-					ch <- true
+					ch <- struct{}{}
 				case e := <-c1:
 					err = e
-					ch <- true
+					ch <- struct{}{}
 				case <-ch:
 					return
 				}

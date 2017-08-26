@@ -78,13 +78,13 @@ func (c *Configurator) Append(args ...Configurable) {
 	c.c = append(c.c, args...)
 }
 
-func (c *Configurator) Configure(cf Configuration) (<-chan bool, <-chan error) {
+func (c *Configurator) Configure(cf Configuration) (<-chan struct{}, <-chan error) {
 	c.cf = cf
 
 	var (
 		wg sync.WaitGroup
-		c0 chan bool  = make(chan bool)
-		c1 chan error = make(chan error, 2)
+		c0 chan struct{} = make(chan struct{})
+		c1 chan error    = make(chan error, 2)
 	)
 
 	wg.Add(len(c.c))
@@ -102,7 +102,7 @@ func (c *Configurator) Configure(cf Configuration) (<-chan bool, <-chan error) {
 	go func() {
 		wg.Wait()
 
-		c0 <- true
+		c0 <- struct{}{}
 		close(c0)
 	}()
 
